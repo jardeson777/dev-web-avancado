@@ -1,0 +1,42 @@
+@startuml
+
+actor Student
+actor Teacher
+actor Coordinator
+
+usecase UC_CreateSchool as "Criar Escola"
+usecase UC_RegisterStudent as "Cadastrar Alunos"
+usecase UC_RegisterTeacher as "Cadastrar Professores"
+usecase UC_SetAcademicPeriod as "Definir Período Letivo"
+usecase UC_SetEnrollmentDeadline as "Definir Prazo de Inscrição"
+
+usecase UC_EnrollInDiscipline as "Inscrever-se em Disciplina"
+usecase UC_ViewEnrolledDisciplines as "Consultar Disciplinas Inscritas"
+usecase UC_ViewDisciplineCalendar as "Visualizar Calendário de Disciplina"
+usecase UC_ViewAbsences as "Visualizar Faltas"
+usecase UC_ViewProgress as "Consultar Progresso"
+
+usecase UC_CreateCalendarAndClassrooms as "Criar Calendário e Aulas"
+usecase UC_RecordAttendance as "Registrar Presença"
+usecase UC_EnterGrades as "Lançar Notas"
+
+Coordinator --> UC_CreateSchool
+Coordinator --> UC_RegisterStudent
+Coordinator --> UC_RegisterTeacher
+Coordinator --> UC_SetAcademicPeriod
+Coordinator --> UC_SetEnrollmentDeadline
+
+Student --> UC_EnrollInDiscipline
+Student --> UC_ViewEnrolledDisciplines
+Student --> UC_ViewDisciplineCalendar
+Student --> UC_ViewAbsences
+Student --> UC_ViewProgress
+
+Teacher --> UC_CreateCalendarAndClassrooms
+Teacher --> UC_RecordAttendance
+Teacher --> UC_EnterGrades
+
+' Organizar os casos de uso verticalmente
+left to right direction
+
+@enduml

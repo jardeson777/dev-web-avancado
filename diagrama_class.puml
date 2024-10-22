@@ -1,0 +1,105 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class School {
+    + id: String
+    + start_class: Date
+    + end_class: Date
+    + start_registration: Date
+    + end_registration: Date
+    --
+    + isEnrollmentOpen(): boolean
+}
+
+class Student {
+    + id: String
+    + name: String
+    + email: String
+    + password: String
+    + type: StudentType
+    + school_id: String
+    --
+    + enrollInDiscipline(discipline: Discipline, type: StudentType): void
+    + viewEnrolledDisciplines(): List<Discipline>
+    + viewDisciplineCalendar(discipline: Discipline): Schedule
+    + viewAbsences(discipline: Discipline): int
+    + viewProgress(disciplineId: String): Progress
+}
+
+class Teacher {
+    + id: String
+    + name: String
+    + email: String
+    + password: String
+    + school_id: String
+    --
+    + enterGrades(student: Student, score: float): void
+    + createCalendar(discipline: Discipline, classrooms: List<Classroom>): void
+    + recordAttendance(classroom: Classroom, student: Student, presence: boolean): void
+}
+
+class Coordinator {
+    + id: String
+    + name: String
+    + email: String
+    + password: String
+    + school_id: String
+    --
+    + registerStudent(student: Student): void
+    + registerTeacher(teacher: Teacher): void
+    + setAcademicPeriod(school: School): void
+    + setEnrollmentDeadline(school: School, deadline: Date): void
+}
+
+class Discipline {
+    + id: String
+    + name: String
+    + teacher_id: String
+}
+
+class Classroom {
+    + id: String
+    + discipline_id: String
+    + title: String
+    + description: String
+    + date_time: DateTime
+    + weight: int
+}
+
+class StudentDiscipline {
+    + id: String
+    + student_id: String
+    + discipline_id: String
+    --
+    + getProgress(): Progress
+}
+
+class StudentClassroom {
+    + id: String
+    + student_id: String
+    + classroom_id: String
+    + score: float
+    + presence: boolean
+}
+
+enum StudentType {
+    ENGAGED
+    OBSERVER
+}
+
+' Relações entre classes
+School "1" o-- "*" Student : belongs to
+School "1" o-- "*" Teacher : belongs to
+School "1" o-- "*" Coordinator : belongs to
+
+Discipline "1" o-- "*" Classroom : has
+Discipline "1" -- "1" Teacher : taught by
+
+Student "1" o-- "*" StudentDiscipline : enrolled in
+Discipline "1" o-- "*" StudentDiscipline : has
+
+Student "1" o-- "*" StudentClassroom : attends
+Classroom "1" o-- "*" StudentClassroom : has
+
+@enduml

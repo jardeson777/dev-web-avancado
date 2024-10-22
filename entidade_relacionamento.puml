@@ -1,0 +1,91 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+entity "school" {
+    * id: String
+    --
+    start_class: Date
+    end_class: Date
+    start_registration: Date
+    end_registration: Date
+}
+
+entity "student" {
+    * id: String
+    --
+    name: String
+    email: String
+    password: String
+    type: StudentType
+    school_id: String
+}
+
+entity "teacher" {
+    * id: String
+    --
+    name: String
+    email: String
+    password: String
+    school_id: String
+}
+
+entity "coordinator" {
+    * id: String
+    --
+    name: String
+    email: String
+    password: String
+    school_id: String
+}
+
+entity "discipline" {
+    * id: String
+    --
+    name: String
+    teacher_id: String
+}
+
+entity "classroom" {
+    * id: String
+    --
+    discipline_id: String
+    title: String
+    description: String
+    date_time: DateTime
+    weight: int
+}
+
+entity "student_discipline" {
+    * id: String
+    --
+    student_id: String
+    discipline_id: String
+}
+
+entity "student_classroom" {
+    * id: String
+    --
+    student_id: String
+    classroom_id: String
+    score: float
+    presence: boolean
+}
+
+enum StudentType {
+    ENGAGED
+    OBSERVER
+}
+
+' Relationships
+school ||--o{ student : "belongs to"
+school ||--o{ teacher : "belongs to"
+school ||--o{ coordinator : "belongs to"
+discipline ||--|| teacher : "taught by"
+discipline ||--o{ classroom : "has"
+student ||--o{ student_discipline : "enrolled in"
+discipline ||--o{ student_discipline : "has"
+student ||--o{ student_classroom : "attends"
+classroom ||--o{ student_classroom : "has"
+
+@enduml
