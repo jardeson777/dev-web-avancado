@@ -8,7 +8,7 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas:
 
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- [Java JDK 21](https://jdk.java.net/21/)
+- [Java JDK 21](https://www.azul.com/downloads/?package=jdk#zulu)
 - [Maven](https://maven.apache.org/install.html) (opcional, se você não estiver usando o Docker para construir a aplicação)
 
 ## Passo 1: Configurar as Variáveis de Ambiente
