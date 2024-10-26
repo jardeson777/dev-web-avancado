@@ -7,6 +7,8 @@ WORKDIR /app
 # Copie o arquivo pom.xml e o diretório src para o diretório de trabalho
 COPY pom.xml .
 COPY src ./src
+COPY .env ./.env
+
 
 # Adicione a dependência do Maven para construir o aplicativo
 RUN apt-get update && apt-get install -y maven
