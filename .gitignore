@@ -33,3 +33,6 @@ build/
 
 # Linux
 *~
+
+.env
+espaco_aluno/.env
