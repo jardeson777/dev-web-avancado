@@ -5,6 +5,7 @@ skinparam linetype ortho
 entity "school" {
     * id: String
     --
+    name: String
     start_class: Date
     end_class: Date
     start_registration: Date
@@ -44,6 +45,7 @@ entity "discipline" {
     --
     name: String
     teacher_id: String
+    prerequisite_id: String [nullable]
 }
 
 entity "classroom" {
@@ -87,5 +89,6 @@ student ||--o{ student_discipline : "enrolled in"
 discipline ||--o{ student_discipline : "has"
 student ||--o{ student_classroom : "attends"
 classroom ||--o{ student_classroom : "has"
+discipline }o--|| discipline : "prerequisite"
 
 @enduml
