@@ -17,7 +17,6 @@ entity "student" {
     name: String
     email: String
     password: String
-    type: StudentType
     school_id: String
 }
 
@@ -59,6 +58,7 @@ entity "classroom" {
 entity "student_discipline" {
     * id: String
     --
+    type: StudentType
     student_id: String
     discipline_id: String
 }

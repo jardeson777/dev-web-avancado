@@ -17,10 +17,9 @@ class Student {
     + name: String
     + email: String
     + password: String
-    + type: StudentType
     + school_id: String
     --
-    + enrollInDiscipline(discipline: Discipline, type: StudentType): void
+    + enrollInDiscipline(discipline: Discipline): void
     + viewEnrolledDisciplines(): List<Discipline>
     + viewDisciplineCalendar(discipline: Discipline): Schedule
     + viewAbsences(discipline: Discipline): int
@@ -69,6 +68,7 @@ class Classroom {
 
 class StudentDiscipline {
     + id: String
+    + type: StudentType
     + student_id: String
     + discipline_id: String
     --
