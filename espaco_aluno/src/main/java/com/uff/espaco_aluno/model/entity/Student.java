@@ -1,11 +1,7 @@
 package com.uff.espaco_aluno.model.entity;
 
-import com.uff.espaco_aluno.utils.enums.StudentType;
 import com.uff.espaco_aluno.utils.enums.UserRole;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +16,12 @@ public class Student extends User {
 
     @Transient
     private UserRole role = UserRole.STUDENT;
+
+    @Column(nullable = false)
+    private Boolean isActive;
+
     @ManyToOne
     @JoinColumn(name = "school_id", nullable = false)
     private School school;
+
 }

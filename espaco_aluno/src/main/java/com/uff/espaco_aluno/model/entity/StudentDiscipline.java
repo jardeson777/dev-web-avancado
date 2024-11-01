@@ -20,6 +20,7 @@ public class StudentDiscipline {
     private UUID id;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private StudentType studentType;
 
     @ManyToOne

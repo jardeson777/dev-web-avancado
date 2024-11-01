@@ -17,6 +17,9 @@ public class Teacher extends User {
     @Transient
     private UserRole role = UserRole.TEACHER;
 
+    @Column(nullable = false)
+    private Boolean isActive;
+
     @ManyToOne
     @JoinColumn(name = "school_id", nullable = false)
     private School school;
