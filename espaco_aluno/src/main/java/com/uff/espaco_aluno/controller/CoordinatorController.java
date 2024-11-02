@@ -1,6 +1,5 @@
 package com.uff.espaco_aluno.controller;
 
-import com.uff.espaco_aluno.model.dto.LoginDto;
 import com.uff.espaco_aluno.model.dto.coordinator.CoordinatorCreateDto;
 import com.uff.espaco_aluno.model.dto.coordinator.CoordinatorResponseDto;
 import com.uff.espaco_aluno.service.CoordinatorService;
@@ -33,10 +32,4 @@ public class CoordinatorController {
     private ResponseEntity<CoordinatorResponseDto> getCoordinatorById(@PathVariable UUID id) throws Exception {
         return ResponseEntity.ok().body(service.getCoordinatorById(id));
     }
-
-    @PostMapping("/login")
-    private ResponseEntity<String> getCoordinatorByLogin(@RequestBody LoginDto dto) throws Exception {
-        return ResponseEntity.ok().body(service.getCoordinatorByLogin(dto));
-    }
-
 }

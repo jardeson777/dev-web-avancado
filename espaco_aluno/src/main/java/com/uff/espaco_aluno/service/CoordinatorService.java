@@ -67,7 +67,7 @@ public class CoordinatorService {
     public String getCoordinatorByLogin(LoginDto dto) throws Exception {
         Coordinator coordinator = repository.findByEmailAndPassword(dto.email(), dto.password()).orElseThrow(InvalidLoginException::new);
 
-        String userInfo = coordinator.getEmail() + ":" + coordinator.getRole().name();
+        String userInfo = coordinator.getId() + ":" + coordinator.getRole().name();
 
         return Base64.getEncoder().encodeToString(userInfo.getBytes());
     }

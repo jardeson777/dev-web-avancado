@@ -15,4 +15,11 @@ public class InvalidLoginException extends Exception {
         );
     }
 
+    public InvalidLoginException(ExceptionsEnum exceptionsEnum) {
+        this.errorResponse = new ErrorResponse(
+                exceptionsEnum.getStatusCode(),
+                exceptionsEnum.getDescription()
+        );
+    }
+
 }
