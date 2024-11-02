@@ -21,6 +21,5 @@ public class Coordinator extends User {
     private UserRole role = UserRole.COORDINATOR;
     @ManyToOne
     @JoinColumn(name = "school_id")
-
     private School school;
 }

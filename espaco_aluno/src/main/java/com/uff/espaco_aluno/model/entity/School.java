@@ -20,15 +20,14 @@ public class School {
     private UUID id;
 
     @Column(nullable = false)
+    private String name;
+
     private Date startClass;
 
-    @Column(nullable = false)
     private Date endClass;
 
-    @Column(nullable = false)
     private Date startRegistration;
 
-    @Column(nullable = false)
     private Date endRegistration;
 }
 
