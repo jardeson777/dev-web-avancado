@@ -1,5 +1,6 @@
 package com.uff.espaco_aluno.controller;
 
+import com.uff.espaco_aluno.model.dto.CreateResponseDto;
 import com.uff.espaco_aluno.model.dto.coordinator.CoordinatorCreateDto;
 import com.uff.espaco_aluno.model.dto.coordinator.CoordinatorResponseDto;
 import com.uff.espaco_aluno.service.CoordinatorService;
@@ -19,13 +20,13 @@ public class CoordinatorController {
     CoordinatorService service;
 
     @PostMapping("/create")
-    private ResponseEntity<String> createCoordinator(@RequestBody CoordinatorCreateDto entryDto) throws Exception {
+    private ResponseEntity<CreateResponseDto> createCoordinator(@RequestBody CoordinatorCreateDto entryDto) throws Exception {
         if (Objects.isNull(entryDto.idSchool())) {
-            String token = service.createCoordinator(entryDto, entryDto.schoolName());
-            return ResponseEntity.created(URI.create("/")).body(token);
+            CreateResponseDto token = service.createCoordinator(entryDto, entryDto.schoolName());
+            return ResponseEntity.created(URI.create("/login")).body(token);
         }
-        String token = service.createCoordinator(entryDto);
-        return ResponseEntity.created(URI.create("/")).body(token);
+        CreateResponseDto token = service.createCoordinator(entryDto);
+        return ResponseEntity.created(URI.create("/login")).body(token);
     }
 
     @GetMapping("/{id}")

@@ -2,7 +2,9 @@ package com.uff.espaco_aluno.service;
 
 import com.uff.espaco_aluno.exception.InvalidLoginException;
 import com.uff.espaco_aluno.exception.InvalidUserException;
+import com.uff.espaco_aluno.model.dto.CreateResponseDto;
 import com.uff.espaco_aluno.model.dto.LoginDto;
+import com.uff.espaco_aluno.model.dto.ResponseTokenDto;
 import com.uff.espaco_aluno.model.dto.coordinator.CoordinatorCreateDto;
 import com.uff.espaco_aluno.model.dto.coordinator.CoordinatorResponseDto;
 import com.uff.espaco_aluno.model.entity.Coordinator;
@@ -24,17 +26,19 @@ public class CoordinatorService {
     @Autowired
     SchoolService schoolService;
 
-    public String createCoordinator(CoordinatorCreateDto dto) throws Exception {
+    public CreateResponseDto createCoordinator(CoordinatorCreateDto dto) throws Exception {
         if (Objects.isNull(dto.email())) {
             throw new Exception();
         }
 
         School school = schoolService.getSchoolById(dto.idSchool());
 
-        return saveCoordinator(dto, school).getRole().name();
+        Coordinator savedCoordinator = saveCoordinator(dto, school);
+
+        return CreateResponseDto.newUser(savedCoordinator.getId());
     }
 
-    public String createCoordinator(CoordinatorCreateDto dto, String schoolName) throws Exception {
+    public CreateResponseDto createCoordinator(CoordinatorCreateDto dto, String schoolName) throws Exception {
         if (Objects.isNull(dto.email())) {
             throw new Exception();
         }
@@ -44,8 +48,9 @@ public class CoordinatorService {
         }
 
         School school = schoolService.createSchool(schoolName);
+        Coordinator savedCoordinator = saveCoordinator(dto, school);
 
-        return saveCoordinator(dto, school).getId().toString();
+        return CreateResponseDto.newUser(savedCoordinator.getId());
     }
 
     private Coordinator saveCoordinator(CoordinatorCreateDto dto, School school) {
@@ -64,11 +69,11 @@ public class CoordinatorService {
         return CoordinatorResponseDto.mapToCoordinatorResponseDTO(coordinator);
     }
 
-    public String getCoordinatorByLogin(LoginDto dto) throws Exception {
+    public ResponseTokenDto getCoordinatorByLogin(LoginDto dto) throws Exception {
         Coordinator coordinator = repository.findByEmailAndPassword(dto.email(), dto.password()).orElseThrow(InvalidLoginException::new);
 
         String userInfo = coordinator.getId() + ":" + coordinator.getRole().name();
 
-        return Base64.getEncoder().encodeToString(userInfo.getBytes());
+        return ResponseTokenDto.newToken(Base64.getEncoder().encodeToString(userInfo.getBytes()));
     }
 }

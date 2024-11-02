@@ -2,9 +2,9 @@ package com.uff.espaco_aluno.controller;
 
 import com.uff.espaco_aluno.exception.InvalidLoginException;
 import com.uff.espaco_aluno.model.dto.LoginDto;
+import com.uff.espaco_aluno.model.dto.ResponseTokenDto;
 import com.uff.espaco_aluno.service.CoordinatorService;
 import com.uff.espaco_aluno.utils.enums.ExceptionsEnum;
-import com.uff.espaco_aluno.utils.enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,15 +23,15 @@ public class HomeController {
     }
 
     @PostMapping("/login")
-    private ResponseEntity<String> getByLogin(@RequestBody LoginDto dto) throws Exception {
+    private ResponseEntity<ResponseTokenDto> getByLogin(@RequestBody LoginDto dto) throws Exception {
         if (dto.role() == null) {
             throw new InvalidLoginException(ExceptionsEnum.UNREPORTED_ROLE);
         }
 
         return switch (dto.role()) {
             case COORDINATOR -> ResponseEntity.ok().body(coordinatorService.getCoordinatorByLogin(dto));
-            case STUDENT -> ResponseEntity.ok("Student logic not yet implemented.");
-            case TEACHER -> ResponseEntity.ok("Teacher logic not yet implemented.");
+            case STUDENT -> ResponseEntity.ok(ResponseTokenDto.newToken("Student logic not yet implemented."));
+            case TEACHER -> ResponseEntity.ok(ResponseTokenDto.newToken("Teacher logic not yet implemented."));
             default -> throw new InvalidLoginException();
         };
     }
