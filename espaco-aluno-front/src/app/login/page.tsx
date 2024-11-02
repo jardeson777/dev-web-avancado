@@ -13,6 +13,7 @@ import { LoaderCircle } from 'lucide-react'
 import WellcomeImage from '@/assets/image-wellcome-school.webp'
 import Logo from '@/assets/logo-espaco-aluno.png'
 import { RadioGroup, RadioGroupItem } from '../../components/ui/radio-group'
+import { useRouter } from 'next/navigation'
 
 const loginSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -26,6 +27,7 @@ type LoginFormValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
+  const { push } = useRouter()
 
   const { register, handleSubmit, formState: { errors }, control } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -40,6 +42,11 @@ export default function LoginPage() {
     setIsLoading(false)
   }
 
+  const handleRegister = () => {
+    push('/cadastrar-coordenador')
+    console.log("Navegar para a página de cadastro de coordenadores")
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-4xl flex shadow-lg">
@@ -49,7 +56,7 @@ export default function LoginPage() {
               <Image
                 src={Logo}
                 alt="Logo da Escola"
-                width={150}
+                width={120}
                 style={{ objectFit: 'cover' }}
               />
             </div>
@@ -121,7 +128,10 @@ export default function LoginPage() {
               </Button>
             </form>
           </CardContent>
-          <CardFooter className="flex justify-center">
+          <CardFooter className="flex flex-col items-center space-y-4">
+            <Button variant="outline" onClick={handleRegister} className="w-full">
+              Cadastrar como Coordenador
+            </Button>
             <p className="text-sm text-gray-600">
               © 2024 Espaço Aluno. Todos os direitos reservados.
             </p>
