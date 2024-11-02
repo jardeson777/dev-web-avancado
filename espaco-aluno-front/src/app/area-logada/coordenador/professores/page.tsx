@@ -27,14 +27,15 @@ import { PlusCircle, Eye, EyeOff } from 'lucide-react'
 
 // Mock data for teachers
 const mockTeachers = [
-  { id: 1, name: 'Ana Rodrigues', email: 'ana@example.com' },
-  { id: 2, name: 'Carlos Ferreira', email: 'carlos@example.com' },
-  { id: 3, name: 'Beatriz Lima', email: 'beatriz@example.com' },
+  { id: 1, name: 'Ana Rodrigues', email: 'ana@example.com', discipline: 'Matemática' },
+  { id: 2, name: 'Carlos Ferreira', email: 'carlos@example.com', discipline: 'História' },
+  { id: 3, name: 'Beatriz Lima', email: 'beatriz@example.com', discipline: 'Biologia' },
 ]
 
 const teacherFormSchema = z.object({
   name: z.string().min(3, 'O nome deve ter pelo menos 3 caracteres'),
   email: z.string().email('Email inválido'),
+  discipline: z.string().min(2, 'A disciplina deve ter pelo menos 2 caracteres'),
   password: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres'),
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
@@ -55,6 +56,7 @@ export default function TeachersPage() {
     defaultValues: {
       name: '',
       email: '',
+      discipline: '',
       password: '',
       confirmPassword: '',
     },
@@ -66,7 +68,7 @@ export default function TeachersPage() {
       console.log(data)
 
       // For now, we'll just add it to our local state
-      setTeachers([...teachers, { id: teachers.length + 1, name: data.name, email: data.email }])
+      setTeachers([...teachers, { id: teachers.length + 1, name: data.name, email: data.email, discipline: data.discipline }])
 
       setIsDialogOpen(false)
       form.reset()
@@ -116,6 +118,13 @@ export default function TeachersPage() {
                 <Input id="email" type="email" {...form.register('email')} />
                 {form.formState.errors.email && (
                   <p className="text-sm text-red-500">{form.formState.errors.email.message}</p>
+                )}
+              </div>
+              <div>
+                <Label htmlFor="discipline">Disciplina</Label>
+                <Input id="discipline" {...form.register('discipline')} />
+                {form.formState.errors.discipline && (
+                  <p className="text-sm text-red-500">{form.formState.errors.discipline.message}</p>
                 )}
               </div>
               <div>
@@ -176,6 +185,7 @@ export default function TeachersPage() {
           <TableRow>
             <TableHead>Nome</TableHead>
             <TableHead>Email</TableHead>
+            <TableHead>Disciplina</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -183,6 +193,7 @@ export default function TeachersPage() {
             <TableRow key={teacher.id}>
               <TableCell>{teacher.name}</TableCell>
               <TableCell>{teacher.email}</TableCell>
+              <TableCell>{teacher.discipline}</TableCell>
             </TableRow>
           ))}
         </TableBody>
