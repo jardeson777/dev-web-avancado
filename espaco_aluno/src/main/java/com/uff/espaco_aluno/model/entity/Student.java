@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity(name = "student")
 @Getter
 @Setter
@@ -24,4 +26,6 @@ public class Student extends User {
     @JoinColumn(name = "school_id", nullable = false)
     private School school;
 
+    @Column(name = "school_id", nullable = false, insertable = false, updatable = false)
+    private UUID schoolId;
 }

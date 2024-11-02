@@ -16,16 +16,20 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(InvalidLoginException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidLoginException(InvalidLoginException ex) {
-        ErrorResponse errorResponse = ex.getErrorResponse();
-        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
-    }
+    @ExceptionHandler(Exception.class) // Captura todas as exceções
+    public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
+        ErrorResponse errorResponse;
 
-    @ExceptionHandler(InvalidUserException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidGetUserException(InvalidUserException ex) {
-        ErrorResponse errorResponse = ex.getErrorResponse();
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        if (ex instanceof InvalidLoginException) {
+            errorResponse = ((InvalidLoginException) ex).getErrorResponse();
+            return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+        } else if (ex instanceof InvalidUserException) {
+            errorResponse = ((InvalidUserException) ex).getErrorResponse();
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        }
+
+        errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(InvalidFormatException.class)

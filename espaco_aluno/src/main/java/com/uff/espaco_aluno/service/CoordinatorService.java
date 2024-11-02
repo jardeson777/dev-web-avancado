@@ -6,7 +6,7 @@ import com.uff.espaco_aluno.model.dto.CreateResponseDto;
 import com.uff.espaco_aluno.model.dto.LoginDto;
 import com.uff.espaco_aluno.model.dto.ResponseTokenDto;
 import com.uff.espaco_aluno.model.dto.coordinator.CoordinatorCreateDto;
-import com.uff.espaco_aluno.model.dto.coordinator.CoordinatorResponseDto;
+import com.uff.espaco_aluno.model.dto.UserResponseDto;
 import com.uff.espaco_aluno.model.entity.Coordinator;
 import com.uff.espaco_aluno.model.entity.School;
 import com.uff.espaco_aluno.repository.CoordinatorRepository;
@@ -63,10 +63,10 @@ public class CoordinatorService {
         return repository.save(coordinator);
     }
 
-    public CoordinatorResponseDto getCoordinatorById(UUID id) throws Exception {
+    public UserResponseDto getCoordinatorById(UUID id) throws Exception {
         Coordinator coordinator = repository.findById(id).orElseThrow(InvalidUserException::new);
 
-        return CoordinatorResponseDto.mapToCoordinatorResponseDTO(coordinator);
+        return UserResponseDto.mapCoordinatorToUserResponseDTO(coordinator);
     }
 
     public ResponseTokenDto getCoordinatorByLogin(LoginDto dto) throws Exception {

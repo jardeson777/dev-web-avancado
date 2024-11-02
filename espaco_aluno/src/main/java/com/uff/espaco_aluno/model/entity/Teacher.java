@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity(name = "teacher")
 @Getter
 @Setter
@@ -21,6 +23,9 @@ public class Teacher extends User {
     private Boolean isActive;
 
     @ManyToOne
-    @JoinColumn(name = "school_id", nullable = false)
+    @JoinColumn(name = "school_id")
     private School school;
+
+    @Column(name = "school_id", nullable = false, insertable = false, updatable = false)
+    private UUID schoolId;
 }
