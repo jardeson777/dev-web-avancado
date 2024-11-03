@@ -2,16 +2,18 @@ package com.uff.espaco_aluno.controller;
 
 import com.uff.espaco_aluno.exception.InvalidLoginException;
 import com.uff.espaco_aluno.exception.InvalidUserException;
-import com.uff.espaco_aluno.model.dto.CreateResponseDto;
-import com.uff.espaco_aluno.model.dto.LoginDto;
-import com.uff.espaco_aluno.model.dto.ResponseTokenDto;
-import com.uff.espaco_aluno.model.dto.ValidateUserDto;
+import com.uff.espaco_aluno.model.dto.*;
+import com.uff.espaco_aluno.model.entity.Coordinator;
 import com.uff.espaco_aluno.service.CoordinatorService;
+import com.uff.espaco_aluno.service.SchoolService;
+import com.uff.espaco_aluno.service.StudentService;
 import com.uff.espaco_aluno.service.TeacherService;
 import com.uff.espaco_aluno.utils.enums.ExceptionsEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 public class HomeController {
@@ -20,6 +22,10 @@ public class HomeController {
     CoordinatorService coordinatorService;
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    StudentService studentService;
+    @Autowired
+    SchoolService schoolService;
 
     @GetMapping("/")
     public String home() {
@@ -34,7 +40,7 @@ public class HomeController {
 
         return switch (dto.role()) {
             case COORDINATOR -> ResponseEntity.ok().body(coordinatorService.getCoordinatorByLogin(dto));
-            case STUDENT -> ResponseEntity.ok(ResponseTokenDto.newToken("Student logic not yet implemented."));
+            case STUDENT -> ResponseEntity.ok(studentService.getStudentByLogin(dto));
             case TEACHER -> ResponseEntity.ok().body(teacherService.getTeacherByLogin(dto));
             default -> throw new InvalidLoginException();
         };
@@ -44,9 +50,16 @@ public class HomeController {
     private ResponseEntity<ResponseTokenDto> validateAccount(@RequestBody ValidateUserDto validateDto) throws Exception {
         return switch (validateDto.role()) {
             case TEACHER -> ResponseEntity.ok().body(teacherService.validateTeacher(validateDto));
+            case STUDENT -> ResponseEntity.ok().body(studentService.validateStudent(validateDto));
             default -> throw new InvalidUserException();
         };
     }
 
+    @GetMapping("/schoool/{idCoordinator}")
+    private ResponseEntity<UUID> getIdSchoolByIdCoodinator(@PathVariable UUID idCoordinator) throws Exception {
+        UserResponseDto coordinator = coordinatorService.getCoordinatorById(idCoordinator);
+
+        return ResponseEntity.ok().body(coordinator.SchoolId());
+    }
 }
 

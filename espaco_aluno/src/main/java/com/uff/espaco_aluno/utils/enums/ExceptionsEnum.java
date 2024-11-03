@@ -9,7 +9,8 @@ public enum ExceptionsEnum {
     UNREPORTED_ROLE(500, "Enter the user's role"),
     INVALID_ENUM_VALUE(400, "%s: Invalid value for enum. Accepted values are: %s"),
     NULL_INFO(500, "Create teacher does not allow null information."),
-    INACTIVE_USER(401, "Activate the user before logging in");
+    INACTIVE_USER(401, "Activate the user before logging in"),
+    SCHOOL_NOT_FOUND(404, "School with this ID does not exist in our database.");
 
     private final Integer statusCode;
     private final String description;

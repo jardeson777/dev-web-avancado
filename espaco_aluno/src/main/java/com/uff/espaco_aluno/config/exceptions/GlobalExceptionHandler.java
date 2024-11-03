@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.uff.espaco_aluno.exception.ErrorResponse;
 import com.uff.espaco_aluno.exception.InvalidLoginException;
 import com.uff.espaco_aluno.exception.InvalidUserException;
+import com.uff.espaco_aluno.exception.SchoolNotFoundException;
 import com.uff.espaco_aluno.utils.enums.ExceptionsEnum;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,9 @@ public class GlobalExceptionHandler {
             return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
         } else if (ex instanceof InvalidUserException) {
             errorResponse = ((InvalidUserException) ex).getErrorResponse();
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        } else if (ex instanceof SchoolNotFoundException) {
+            errorResponse = ((SchoolNotFoundException) ex).getErrorResponse();
             return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
 

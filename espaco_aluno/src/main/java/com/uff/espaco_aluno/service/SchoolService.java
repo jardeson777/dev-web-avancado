@@ -1,8 +1,10 @@
 package com.uff.espaco_aluno.service;
 
 import com.uff.espaco_aluno.exception.InvalidLoginException;
+import com.uff.espaco_aluno.exception.SchoolNotFoundException;
 import com.uff.espaco_aluno.model.entity.School;
 import com.uff.espaco_aluno.repository.SchoolRepository;
+import com.uff.espaco_aluno.utils.enums.ExceptionsEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,6 @@ public class SchoolService {
     }
 
     public School getSchoolById(UUID id) throws Exception {
-       return repository.findById(id).orElseThrow(InvalidLoginException::new);
+       return repository.findById(id).orElseThrow(SchoolNotFoundException::new);
     }
 }
