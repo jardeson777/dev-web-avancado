@@ -9,6 +9,7 @@ import com.uff.espaco_aluno.model.entity.Coordinator;
 import com.uff.espaco_aluno.model.entity.School;
 import com.uff.espaco_aluno.model.entity.Teacher;
 import com.uff.espaco_aluno.repository.TeacherRepository;
+import com.uff.espaco_aluno.usecase.school.GetSchoolById;
 import com.uff.espaco_aluno.utils.enums.ExceptionsEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class TeacherService {
     TeacherRepository repository;
 
     @Autowired
-    SchoolService schoolService;
+    GetSchoolById getSchoolById;
 
     public CreateResponseDto createTeacher(TeacherCreateDto dto) throws Exception {
 
@@ -36,7 +37,7 @@ public class TeacherService {
 
         Teacher teacher = dto.newTeacher();
         teacher.setIsActive(true);
-        School school = schoolService.getSchoolById(dto.schoolId());
+        School school = getSchoolById.execute(dto.schoolId());
 
         teacher.setSchool(school);
         Teacher savedTeacher = repository.save(teacher);

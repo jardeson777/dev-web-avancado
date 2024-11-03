@@ -5,9 +5,9 @@ import com.uff.espaco_aluno.model.dto.coordinator.CoordinatorCreateDto;
 import com.uff.espaco_aluno.model.dto.UserResponseDto;
 import com.uff.espaco_aluno.model.dto.student.StudentCreateDto;
 import com.uff.espaco_aluno.model.dto.teacher.TeacherCreateDto;
-import com.uff.espaco_aluno.service.CoordinatorService;
 import com.uff.espaco_aluno.service.StudentService;
 import com.uff.espaco_aluno.service.TeacherService;
+import com.uff.espaco_aluno.usecase.coordinator.CreateCoordinator;
 import com.uff.espaco_aluno.usecase.coordinator.GetCoordinatorById;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,23 +22,22 @@ import java.util.UUID;
 public class CoordinatorController {
 
     @Autowired
-    CoordinatorService service;
-
-    @Autowired
     GetCoordinatorById getCoordinatorById;
 
     @Autowired
     TeacherService teacherService;
     @Autowired
     StudentService studentService;
+    @Autowired
+    CreateCoordinator createCoordinator;
 
     @PostMapping("/create")
     private ResponseEntity<CreateResponseDto> createCoordinator(@RequestBody CoordinatorCreateDto entryDto) throws Exception {
         if (Objects.isNull(entryDto.idSchool())) {
-            CreateResponseDto token = service.createCoordinator(entryDto, entryDto.schoolName());
+            CreateResponseDto token = createCoordinator.execute(entryDto, entryDto.schoolName());
             return ResponseEntity.status(HttpStatus.CREATED).body(token);
         }
-        CreateResponseDto token = service.createCoordinator(entryDto);
+        CreateResponseDto token = createCoordinator.execute(entryDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(token);
     }
 

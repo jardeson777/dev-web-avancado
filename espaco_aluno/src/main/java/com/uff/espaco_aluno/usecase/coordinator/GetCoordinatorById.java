@@ -15,10 +15,6 @@ public class GetCoordinatorById {
     @Autowired
     private CoordinatorRepository repository;
 
-    public GetCoordinatorById(CoordinatorRepository repository) {
-        this.repository = repository;
-    }
-
     public UserResponseDto execute(UUID id) throws InvalidUserException {
         Coordinator coordinator = repository.findById(id).orElseThrow(InvalidUserException::new);
         return UserResponseDto.mapCoordinatorToUserResponseDTO(coordinator);
