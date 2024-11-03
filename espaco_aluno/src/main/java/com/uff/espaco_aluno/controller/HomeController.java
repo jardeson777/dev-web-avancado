@@ -47,15 +47,6 @@ public class HomeController {
         };
     }
 
-    @PutMapping("/validate")
-    private ResponseEntity<ResponseTokenDto> validateAccount(@RequestBody ValidateUserDto validateDto) throws Exception {
-        return switch (validateDto.role()) {
-            case TEACHER -> ResponseEntity.ok().body(teacherService.validateTeacher(validateDto));
-            case STUDENT -> ResponseEntity.ok().body(studentService.validateStudent(validateDto));
-            default -> throw new InvalidUserException();
-        };
-    }
-
     @GetMapping("/school/{idCoordinator}")
     private ResponseEntity<IdSchoolDto> getIdSchoolByIdCoodinator(@PathVariable UUID idCoordinator) throws Exception {
         UserResponseDto coordinator = coordinatorService.getCoordinatorById(idCoordinator);

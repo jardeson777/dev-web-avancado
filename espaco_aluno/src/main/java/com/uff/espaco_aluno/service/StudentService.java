@@ -33,7 +33,7 @@ public class StudentService {
         }
 
         Student student = dto.newStudent();
-        student.setIsActive(false);
+        student.setIsActive(true);
         School school = schoolService.getSchoolById(dto.schoolId());
 
         student.setSchool(school);
@@ -41,19 +41,6 @@ public class StudentService {
 
         return CreateResponseDto.newUser(savedStudent.getId());
     }
-
-    public ResponseTokenDto validateStudent(ValidateUserDto dto) throws InvalidUserException {
-        Student student = repository.findByEmail(dto.email()).orElseThrow(InvalidUserException::new);
-
-        student.setPassword(dto.password());
-        student.setName(dto.name());
-        student.setIsActive(true);
-
-        Student updatedStudent = repository.save(student);
-
-        String userInfo = updatedStudent.getId() + ":" + updatedStudent.getRole().name();
-        return  ResponseTokenDto.newToken(Base64.getEncoder().encodeToString(userInfo.getBytes()));
-    };
 
     public ResponseTokenDto getStudentByLogin(LoginDto dto) throws Exception {
         Student student = repository.findByEmailAndPassword(dto.email(), dto.password()).orElseThrow(InvalidLoginException::new);
