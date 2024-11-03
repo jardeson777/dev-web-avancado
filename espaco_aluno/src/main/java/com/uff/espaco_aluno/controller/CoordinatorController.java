@@ -8,6 +8,7 @@ import com.uff.espaco_aluno.model.dto.teacher.TeacherCreateDto;
 import com.uff.espaco_aluno.service.CoordinatorService;
 import com.uff.espaco_aluno.service.StudentService;
 import com.uff.espaco_aluno.service.TeacherService;
+import com.uff.espaco_aluno.usecase.coordinator.GetCoordinatorById;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,10 @@ public class CoordinatorController {
 
     @Autowired
     CoordinatorService service;
+
+    @Autowired
+    GetCoordinatorById getCoordinatorById;
+
     @Autowired
     TeacherService teacherService;
     @Autowired
@@ -39,7 +44,7 @@ public class CoordinatorController {
 
     @GetMapping("/{id}")
     private ResponseEntity<UserResponseDto> getCoordinatorById(@PathVariable UUID id) throws Exception {
-        return ResponseEntity.ok().body(service.getCoordinatorById(id));
+        return ResponseEntity.ok().body(getCoordinatorById.execute(id));
     }
 
     @PostMapping("/create/teacher")
