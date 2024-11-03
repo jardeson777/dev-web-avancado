@@ -28,6 +28,7 @@ const menuItems: Record<SidebarProps['userType'], MenuItem[]> = {
     { name: 'Calendário', icon: <Calendar className="w-5 h-5" />, href: '/area-logada/professor/calendario' },
     { name: 'Presença', icon: <ClipboardCheck className="w-5 h-5" />, href: '/area-logada/professor/presenca' },
     { name: 'Notas', icon: <GraduationCap className="w-5 h-5" />, href: '/area-logada/professor/notas' },
+    { name: 'Visão geral', icon: <LayoutDashboard className="w-5 h-5" />, href: '/area-logada/professor/visao-geral' },
   ],
   student: [
     { name: 'Inscrição', icon: <BookOpen className="w-5 h-5" />, href: '/area-logada/aluno/inscricao' },
