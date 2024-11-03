@@ -3,6 +3,7 @@ package com.uff.espaco_aluno.controller;
 import com.uff.espaco_aluno.exception.InvalidLoginException;
 import com.uff.espaco_aluno.exception.InvalidUserException;
 import com.uff.espaco_aluno.model.dto.*;
+import com.uff.espaco_aluno.model.dto.school.IdSchoolDto;
 import com.uff.espaco_aluno.model.entity.Coordinator;
 import com.uff.espaco_aluno.service.CoordinatorService;
 import com.uff.espaco_aluno.service.SchoolService;
@@ -56,10 +57,10 @@ public class HomeController {
     }
 
     @GetMapping("/school/{idCoordinator}")
-    private ResponseEntity<UUID> getIdSchoolByIdCoodinator(@PathVariable UUID idCoordinator) throws Exception {
+    private ResponseEntity<IdSchoolDto> getIdSchoolByIdCoodinator(@PathVariable UUID idCoordinator) throws Exception {
         UserResponseDto coordinator = coordinatorService.getCoordinatorById(idCoordinator);
 
-        return ResponseEntity.ok().body(coordinator.SchoolId());
+        return ResponseEntity.ok().body(IdSchoolDto.newIdSchoolDto(coordinator.SchoolId()));
     }
 }
 
