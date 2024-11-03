@@ -55,7 +55,7 @@ public class HomeController {
         };
     }
 
-    @GetMapping("/schoool/{idCoordinator}")
+    @GetMapping("/school/{idCoordinator}")
     private ResponseEntity<UUID> getIdSchoolByIdCoodinator(@PathVariable UUID idCoordinator) throws Exception {
         UserResponseDto coordinator = coordinatorService.getCoordinatorById(idCoordinator);
 
