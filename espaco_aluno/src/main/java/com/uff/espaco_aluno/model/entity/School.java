@@ -4,6 +4,7 @@ import com.uff.espaco_aluno.config.anotations.UUIDGenerator;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -22,12 +23,12 @@ public class School {
     @Column(nullable = false)
     private String name;
 
-    private Date startClass;
+    private LocalDate startClass;
 
-    private Date endClass;
+    private LocalDate endClass;
 
-    private Date startRegistration;
+    private LocalDate startRegistration;
 
-    private Date endRegistration;
+    private LocalDate endRegistration;
 }
 

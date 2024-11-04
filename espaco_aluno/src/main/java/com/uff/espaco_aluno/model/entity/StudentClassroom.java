@@ -26,7 +26,7 @@ public class StudentClassroom {
     @JoinColumn(name = "classroom_id", nullable = false)
     private Classroom classroom;
 
-    private float score;
-    private boolean presence;
+    private Double score;
+    private Boolean presence;
 }
 

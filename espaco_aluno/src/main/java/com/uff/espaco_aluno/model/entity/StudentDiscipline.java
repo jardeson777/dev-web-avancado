@@ -1,6 +1,7 @@
 package com.uff.espaco_aluno.model.entity;
 
 import com.uff.espaco_aluno.config.anotations.UUIDGenerator;
+import com.uff.espaco_aluno.utils.enums.StudentStatusDIsciplineEnum;
 import com.uff.espaco_aluno.utils.enums.StudentType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,4 +31,7 @@ public class StudentDiscipline {
     @ManyToOne
     @JoinColumn(name = "discipline_id", nullable = false)
     private Discipline discipline;
+
+    @Enumerated(EnumType.STRING)
+    private StudentStatusDIsciplineEnum status;
 }
