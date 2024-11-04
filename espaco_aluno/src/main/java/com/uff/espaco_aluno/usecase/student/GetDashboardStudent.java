@@ -34,8 +34,8 @@ public class GetDashboardStudent {
     public StudentDashboardDto execute(UUID id) {
 
         Student student = repository.getReferenceById(id);
-        List<StudentDiscipline> studentDisciplines = studentDisciplineRepository.findByStudent_Id(id);
-        List<StudentClassroom> studentClassrooms = studentClassroomRepository.findByStudent_id(id);
+        List<StudentDiscipline> studentDisciplines = studentDisciplineRepository.findAllByStudent_Id(id);
+        List<StudentClassroom> studentClassrooms = studentClassroomRepository.findAllByStudent_id(id);
 
         Map<UUID, Double> averageByDiscipline = getClassAverage(studentClassrooms);
 
