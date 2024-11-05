@@ -1,4 +1,4 @@
-package com.uff.espaco_aluno.repository;
+package com.uff.espaco_aluno.model.repository;
 
 import com.uff.espaco_aluno.model.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;

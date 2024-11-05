@@ -28,5 +28,19 @@ public class StudentClassroom {
 
     private Double score;
     private Boolean presence;
+    private String disciplineId;
+
+    public Boolean isPresence() {
+        return presence != null && presence;
+    }
+    public void setPresence(Boolean presence) {
+        this.presence = presence;
+    }
+    public String getDisciplineId() {
+        return disciplineId;
+    }
+    public void setDisciplineId(String disciplineId) {
+        this.disciplineId = disciplineId;
+    }
 }
 

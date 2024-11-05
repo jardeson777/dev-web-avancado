@@ -33,4 +33,12 @@ public class Classroom {
 
     @Column(nullable = false)
     private int weight = 0;
+
+    private Boolean conducted;
+    public Boolean isConducted() {
+        return conducted != null && conducted;
+    }
+    public void setConducted(Boolean conducted) {
+        this.conducted = conducted;
+    }
 }

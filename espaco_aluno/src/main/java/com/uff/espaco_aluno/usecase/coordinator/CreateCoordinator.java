@@ -7,7 +7,7 @@ import com.uff.espaco_aluno.model.dto.CreateResponseDto;
 import com.uff.espaco_aluno.model.dto.coordinator.CoordinatorCreateDto;
 import com.uff.espaco_aluno.model.entity.Coordinator;
 import com.uff.espaco_aluno.model.entity.School;
-import com.uff.espaco_aluno.repository.CoordinatorRepository;
+import com.uff.espaco_aluno.model.repository.CoordinatorRepository;
 import com.uff.espaco_aluno.usecase.school.CreateSchool;
 import com.uff.espaco_aluno.usecase.school.GetSchoolById;
 import com.uff.espaco_aluno.utils.enums.ExceptionsEnum;

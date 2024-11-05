@@ -7,7 +7,7 @@ import com.uff.espaco_aluno.model.dto.*;
 import com.uff.espaco_aluno.model.dto.student.StudentCreateDto;
 import com.uff.espaco_aluno.model.entity.School;
 import com.uff.espaco_aluno.model.entity.Student;
-import com.uff.espaco_aluno.repository.StudentRepository;
+import com.uff.espaco_aluno.model.repository.StudentRepository;
 import com.uff.espaco_aluno.usecase.school.GetSchoolById;
 import com.uff.espaco_aluno.utils.enums.ExceptionsEnum;
 import org.springframework.beans.factory.annotation.Autowired;

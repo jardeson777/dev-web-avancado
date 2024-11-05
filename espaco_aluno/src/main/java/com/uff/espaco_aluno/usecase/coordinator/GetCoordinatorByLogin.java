@@ -3,7 +3,7 @@ package com.uff.espaco_aluno.usecase.coordinator;
 import com.uff.espaco_aluno.exception.InvalidLoginException;
 import com.uff.espaco_aluno.model.dto.LoginDto;
 import com.uff.espaco_aluno.model.dto.ResponseTokenDto;
-import com.uff.espaco_aluno.repository.CoordinatorRepository;
+import com.uff.espaco_aluno.model.repository.CoordinatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.uff.espaco_aluno.usecase.school;
 
 import com.uff.espaco_aluno.model.entity.School;
-import com.uff.espaco_aluno.repository.SchoolRepository;
+import com.uff.espaco_aluno.model.repository.SchoolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
