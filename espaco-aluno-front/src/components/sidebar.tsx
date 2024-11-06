@@ -23,6 +23,8 @@ const menuItems: Record<SidebarProps['userType'], MenuItem[]> = {
     { name: 'Escola', icon: <School className="w-5 h-5" />, href: '/area-logada/coordenador/escola' },
     { name: 'Alunos', icon: <Users className="w-5 h-5" />, href: '/area-logada/coordenador/alunos' },
     { name: 'Professores', icon: <Presentation className="w-5 h-5" />, href: '/area-logada/coordenador/professores' },
+    { name: 'Visão geral', icon: <LayoutDashboard className="w-5 h-5" />, href: '/area-logada/coordenador/visao-geral' },
+
   ],
   teacher: [
     { name: 'Calendário', icon: <Calendar className="w-5 h-5" />, href: '/area-logada/professor/calendario' },
