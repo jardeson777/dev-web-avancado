@@ -4,6 +4,7 @@ import com.uff.espaco_aluno.config.anotations.UUIDGenerator;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -29,7 +30,7 @@ public class Classroom {
     private String description;
 
     @Column(nullable = false)
-    private Date dateTime;
+    private LocalDate dateTime;
 
     @Column(nullable = false)
     private int weight = 0;

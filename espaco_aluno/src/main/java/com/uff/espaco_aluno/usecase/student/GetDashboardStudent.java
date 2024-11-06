@@ -12,6 +12,8 @@ import com.uff.espaco_aluno.utils.enums.StudentStatusDIsciplineEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -39,19 +41,26 @@ public class GetDashboardStudent {
 
         Map<UUID, Double> averageByDiscipline = getClassAverage(studentClassrooms);
 
-        return new StudentDashboardDto(calculateAverageGrade(studentClassrooms),
+        return new StudentDashboardDto(
+                formatDouble(calculateAverageGrade(studentClassrooms)),
                 getCurrentCourses(studentDisciplines),
-                calculateTermProgressPercentage(student),
+                formatDouble(calculateTermProgressPercentage(student)),
                 getGradeDistribution(averageByDiscipline),
                 getSchoolInfo(student),
                 getCoursePerformances(studentDisciplines, studentClassrooms, averageByDiscipline)
-                );
+        );
     }
 
     private double calculateAverageGrade(List<StudentClassroom> studentClassrooms) {
-        return studentClassrooms.stream()
-                .mapToDouble(this::calculateStudentClassroomAverage)
-                .sum() / studentClassrooms.size();
+        double totalWeightedScore = studentClassrooms.stream()
+                .mapToDouble(sc -> sc.getScore() * Math.max(sc.getClassroom().getWeight(), 1))
+                .sum();
+
+        int totalWeight = studentClassrooms.stream()
+                .mapToInt(sc -> Math.max(sc.getClassroom().getWeight(), 1))
+                .sum();
+
+        return totalWeight == 0 ? 0 : totalWeightedScore / totalWeight;
     }
 
     private int getCurrentCourses(List<StudentDiscipline> studentDisciplines) {
@@ -76,12 +85,16 @@ public class GetDashboardStudent {
         return studentClassrooms.stream()
                 .collect(Collectors.groupingBy(
                         studentClassroom -> studentClassroom.getClassroom().getDiscipline().getId(),
-                        Collectors.summingDouble(this::calculateStudentClassroomAverage)));
+                        Collectors.collectingAndThen(
+                                Collectors.averagingDouble(this::calculateStudentClassroomAverage),
+                                this::formatDouble
+                        )
+                ));
     }
 
     private double calculateStudentClassroomAverage(StudentClassroom studentClassroom) {
         Classroom classroom = studentClassroom.getClassroom();
-        int weight = classroom.getWeight() > 0 ? classroom.getWeight() : 1;
+        int weight = Math.max(classroom.getWeight(), 1);
         return studentClassroom.getScore() / weight;
     }
 
@@ -98,7 +111,7 @@ public class GetDashboardStudent {
 
                     return new StudentDashboardDto.CoursePerformance(
                             studentDiscipline.getDiscipline().getName(),
-                            average,
+                            formatDouble(average),
                             presence,
                             status
                     );
@@ -122,5 +135,11 @@ public class GetDashboardStudent {
                 student.getSchool().getStartRegistration(),
                 student.getSchool().getEndRegistration()
         );
+    }
+
+    private double formatDouble(double value) {
+        return BigDecimal.valueOf(value)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
     }
 }

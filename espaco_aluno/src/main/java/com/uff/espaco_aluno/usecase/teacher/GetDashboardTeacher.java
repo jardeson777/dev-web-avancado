@@ -61,13 +61,14 @@ public class GetDashboardTeacher {
         );
     }
 
-    private double calculateAttendanceAverage(List<Classroom> classrooms) {
+    double calculateAttendanceAverage(List<Classroom> classrooms) {
         List<StudentClassroom> allAttendances = studentClassroomRepository.findAllByClassrooms(classrooms);
         long presentCount = allAttendances.stream().filter(StudentClassroom::isPresence).count();
+        if(allAttendances.isEmpty()) return 0.0;
         return ((double) presentCount / allAttendances.size()) * 100;
     }
 
-    private double calculateClassAverage(List<Classroom> classrooms) {
+    double calculateClassAverage(List<Classroom> classrooms) {
         List<StudentClassroom> allScores = studentClassroomRepository.findAllByClassrooms(classrooms);
         return allScores.stream()
                 .filter(sc -> sc.getScore() != null)
@@ -76,7 +77,7 @@ public class GetDashboardTeacher {
                 .orElse(0.0);
     }
 
-    private Map<String, Long> getGradeDistribution(List<Classroom> classrooms) {
+    Map<String, Long> getGradeDistribution(List<Classroom> classrooms) {
         List<StudentClassroom> allScores = studentClassroomRepository.findAllByClassrooms(classrooms);
         return allScores.stream()
                 .filter(sc -> sc.getScore() != null)
